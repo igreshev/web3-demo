@@ -6,7 +6,7 @@ import useMetamask from "../lib/use-metamask";
 export default function Navigation() {
   const { metaState } = useMetamask();
   return (
-    <div>
+    <>
       {metaState.isConnected
         ? metaState.chain.id !== null &&
           metaState.chain.id !== "1" && (
@@ -26,6 +26,6 @@ export default function Navigation() {
           </div>
         </div>
       </nav>
-    </div>
+    </>
   );
 }

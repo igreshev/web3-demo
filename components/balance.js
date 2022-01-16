@@ -9,7 +9,7 @@ export default function Balance({ state: metaState }) {
       (async () => {
         let balance;
         balance = await metaState.web3.getBalance(metaState.account[0]);
-        setBalance(parseFloat(balance / 10 ** 18).toFixed(3));
+        setBalance(parseFloat(balance / 10 ** 18).toFixed(4));
       })();
     }
   }, [metaState]);

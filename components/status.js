@@ -5,7 +5,6 @@ const format = (addr) => addr.substring(0, 6) + "..." + addr.slice(-4);
 
 export default function Status() {
   const { metaState } = useMetamask();
-  console.log(metaState);
 
   return (
     <div className="block px-6 py-3 text-sm text-gray-500 font-bold border border-gray-100 rounded">
