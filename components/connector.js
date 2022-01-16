@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useMetamask from "../lib/use-metamask";
-import Web3 from "web3-eth";
+import { ethers } from "ethers";
 
 export default function Connector() {
   const { connect, metaState } = useMetamask();
@@ -9,7 +9,8 @@ export default function Connector() {
     if (metaState.isAvailable && !metaState.isConnected) {
       (async () => {
         try {
-          await connect(Web3);
+          // await connect(Web3);
+          await connect(ethers.providers.Web3Provider, "any");
         } catch (error) {
           console.log(error);
         }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useMetamask from "../lib/use-metamask";
+import { Contract } from "ethers";
 
 // The minimum ABI to get ERC20 Token balance
 let abi = [
@@ -48,18 +49,17 @@ let abi = [
 ];
 
 function TokenItem({ token, metaState }) {
-  let contract = new metaState.web3.Contract(abi, token.address);
+  console.log(metaState);
 
+  let contract = new Contract(token.address, abi, metaState.web3);
   let [info, setInfo] = useState([]);
 
   useEffect(() => {
     (async () => {
-      let decimals = await contract.methods.decimals().call();
-      let balance = await contract.methods
-        .balanceOf(metaState.account[0])
-        .call();
-      let totalSupply = await contract.methods.totalSupply().call();
-      let symbol = await contract.methods.symbol().call();
+      let decimals = await contract.decimals();
+      let balance = await contract.balanceOf(metaState.account[0]);
+      let totalSupply = await contract.totalSupply();
+      let symbol = await contract.symbol();
 
       setInfo([
         symbol,
