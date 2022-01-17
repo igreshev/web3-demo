@@ -75,7 +75,10 @@ function TokenItem({ token, metaState }) {
   return (
     <ul>
       <li>
-        <img className="h-6 inline" src={`images/logos/${info[0]}.svg`}></img>{" "}
+        <img
+          className="h-6 inline"
+          src={`images/logos/${info[0].toLowerCase()}.svg`}
+        ></img>{" "}
         <span>
           {info[0]} {info[1]} / {info[2]}
         </span>
@@ -112,7 +115,7 @@ export default function TokensContainer({ tokens }) {
           swap(metaState);
         }}
       >
-        make a v3 demo swap
+        swap using uniswap v3 sdk (WIP)
       </button>
     </div>
   );
