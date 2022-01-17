@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useMetamask from "../lib/use-metamask";
 import { Contract } from "ethers";
+import swap from "../lib/uniswap3";
 
 // The minimum ABI to get ERC20 Token balance
 let abi = [
@@ -49,8 +50,6 @@ let abi = [
 ];
 
 function TokenItem({ token, metaState }) {
-  console.log(metaState);
-
   let contract = new Contract(token.address, abi, metaState.web3);
   let [info, setInfo] = useState([]);
 
@@ -69,10 +68,19 @@ function TokenItem({ token, metaState }) {
     })();
   }, []);
 
+  if (info.length === 0) {
+    return null;
+  }
+
   return (
-    <div>
-      {info[0]} balance: {info[1]} total: {info[2]}
-    </div>
+    <ul>
+      <li>
+        <img className="h-6 inline" src={`images/logos/${info[0]}.svg`}></img>{" "}
+        <span>
+          {info[0]} {info[1]} / {info[2]}
+        </span>
+      </li>
+    </ul>
   );
 }
 
@@ -86,10 +94,6 @@ export default function TokensContainer({ tokens }) {
   )
     return null;
 
-  console.log("META", metaState);
-
-  console.log(metaState.chain.name);
-
   const tokenItems = tokens[metaState.chain.name].map((token) => (
     <TokenItem
       key={token.address.toString()}
@@ -98,5 +102,18 @@ export default function TokensContainer({ tokens }) {
     />
   ));
 
-  return <ul className="container mx-auto">{tokenItems}</ul>;
+  return (
+    <div className="container mx-auto text-sm text-gray-500">
+      <ul>{tokenItems}</ul>
+      <br />
+      <button
+        className="px-6 py-3 mr-4 text-sm bg-gray-500 hover:bg-gray-600 text-gray-50 font-semibold rounded"
+        onClick={() => {
+          swap(metaState);
+        }}
+      >
+        make a v3 demo swap
+      </button>
+    </div>
+  );
 }
